@@ -4,35 +4,24 @@ class BtnGroup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            secondary: "btn btn-secondary",
-            primary: "btn btn-primary"
+            activeButton: ""
         }
     }
 
-    onClickHandler = (e) => {
-        const leftButton = "Left"
-        const rightButton = "Right"
-        const secondaryClass = "btn btn-secondary"
-        const primaryClass = "btn btn-primary"
-        const event = e.target
-
-        if (event.textContent === leftButton) {
-            event.className = primaryClass + " left"
-            document.querySelector('.right')
-                .className = secondaryClass + " right"
-        }
-        if (event.textContent === rightButton) {
-            event.className = primaryClass + " right"
-            document.querySelector('.left')
-                .className = secondaryClass + " left"
-        }
+    onClickHandler = ({target}) => {
+        if (target.name === "right") this.setState({activeButton: "right"})
+        else if (target.name === "left") this.setState({activeButton: "left"})
     }
 
     render() {
         return (
             <div className="btn-group" role="group">
-                <button type="button" className={this.state.secondary + " left"} onClick={this.onClickHandler}>Left</button>
-                <button type="button" className={this.state.secondary + " right"} onClick={this.onClickHandler}>Right</button>
+                <button name="left" type="button"
+                        className={this.state.activeButton === "left" ? "btn btn-primary left" : "btn btn-secondary left"}
+                        id = "left" onClick={this.onClickHandler}>Left</button>
+                <button name="right" type="button"
+                        className={this.state.activeButton === "right" ? "btn btn-primary right" : "btn btn-secondary right"}
+                        id = "right" onClick={this.onClickHandler}>Right</button>
             </div>
         )
     }
